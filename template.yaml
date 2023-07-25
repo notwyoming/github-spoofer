@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Github Spoofer
+
+Resources:
+  LambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: spoof.run
+      Runtime: python3.8
+      Policies:
+        - AWSLambdaExecute # Provides PutLogEvents (CloudWatch) and Get/PutObject (S3)
+      Environment:
+        Variables:
+          SECRET_NAME: github
+
+Outputs:
+  LambdaFunction:
+    Description: Lambda Function ARN
+    Value: !GetAtt LambdaFunction.Arn
